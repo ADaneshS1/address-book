@@ -40,7 +40,7 @@ function showContacts(contactList) {
   for (let i = 0; i < contactList.length; i++) {
     const contact = contactList[i];
     console.log(
-      `${contact.fullName}, ${contact.phone}, ${contact.email}, ${contact.address}`
+      `${contact.fullName} | ${contact.phone} | ${contact.email} | ${contact.address}`
     );
   }
 }
