@@ -54,10 +54,16 @@ contacts.push(
 );
 
 function showContacts(contactList) {
-  for (let i = 0; i < contactList.length; i++) {
-    const contact = contactList[i];
+  // for (let i = 0; i < contactList.length; i++) {
+  //   const contact = contactList[i];
+  //   console.log(
+  //     `${contact.fullName} | ${contact.phone} | ${contact.email} | ${contact.address}`
+  //   );
+  // }
+
+  for (let data of contactList) {
     console.log(
-      `${contact.fullName} | ${contact.phone} | ${contact.email} | ${contact.address}`
+      `${data.fullName} | ${data.phone} | ${data.email} | ${data.address}`
     );
   }
 
