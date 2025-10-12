@@ -1,4 +1,4 @@
-const contacts = [
+let contacts = [
   {
     id: 1,
     fullName: "Budi Setiawan",
@@ -36,6 +36,23 @@ const contacts = [
   },
 ];
 
+contacts.push(
+  {
+    id: 6,
+    fullName: "Ali Hasan",
+    phone: "+62-4599-4553-093",
+    email: "alihassn43@example.com",
+    address: "Surabaya",
+  },
+  {
+    id: 7,
+    fullName: "Naufal Irsyad",
+    phone: "+62-8244-1432-609",
+    email: "naufdyad222@example.com",
+    address: "Tangerang",
+  }
+);
+
 function showContacts(contactList) {
   for (let i = 0; i < contactList.length; i++) {
     const contact = contactList[i];
@@ -43,6 +60,10 @@ function showContacts(contactList) {
       `${contact.fullName} | ${contact.phone} | ${contact.email} | ${contact.address}`
     );
   }
+
+  // Count total contacts data
+  let totalContacts = contactList.length;
+  console.log("Total contacts are: ", totalContacts);
 }
 
 showContacts(contacts);
