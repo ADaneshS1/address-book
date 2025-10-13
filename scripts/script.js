@@ -54,20 +54,12 @@ contacts.push(
 );
 
 function showContacts(contactList) {
-  // for (let i = 0; i < contactList.length; i++) {
-  //   const contact = contactList[i];
-  //   console.log(
-  //     `${contact.fullName} | ${contact.phone} | ${contact.email} | ${contact.address}`
-  //   );
-  // }
-
   for (let data of contactList) {
     console.log(
       `${data.fullName} | ${data.phone} | ${data.email} | ${data.address}`
     );
   }
 
-  // Count total contacts data
   let totalContacts = contactList.length;
   console.log("Total contacts are: ", totalContacts);
 }
