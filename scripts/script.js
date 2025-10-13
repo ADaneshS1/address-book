@@ -36,40 +36,26 @@ let contacts = [
   },
 ];
 
-contacts.push(
-  {
-    id: 6,
-    fullName: "Ali Hasan",
-    phone: "+62-4599-4553-093",
-    email: "alihassn43@example.com",
-    address: "Surabaya",
-  },
-  {
-    id: 7,
-    fullName: "Naufal Irsyad",
-    phone: "+62-8244-1432-609",
-    email: "naufdyad222@example.com",
-    address: "Tangerang",
-  }
-);
-
 function showContacts(contactList) {
-  // for (let i = 0; i < contactList.length; i++) {
-  //   const contact = contactList[i];
-  //   console.log(
-  //     `${contact.fullName} | ${contact.phone} | ${contact.email} | ${contact.address}`
-  //   );
-  // }
-
   for (let data of contactList) {
     console.log(
       `${data.fullName} | ${data.phone} | ${data.email} | ${data.address}`
     );
   }
 
-  // Count total contacts data
   let totalContacts = contactList.length;
   console.log("Total contacts are: ", totalContacts);
+}
+
+function addContact() {
+  // TODO: Fix this to be dynamic
+  contacts.push({
+    id: 6,
+    fullName: "Ali Hasan",
+    phone: "+62-4599-4553-093",
+    email: "alihassn43@example.com",
+    address: "Surabaya",
+  });
 }
 
 showContacts(contacts);
