@@ -1,4 +1,4 @@
-let contacts = [
+let dataContacts = [
   {
     id: 1,
     fullName: "Budi Setiawan",
@@ -36,32 +36,90 @@ let contacts = [
   },
 ];
 
-contacts.push(
-  {
-    id: 6,
-    fullName: "Ali Hasan",
-    phone: "+62-4599-4553-093",
-    email: "alihassn43@example.com",
-    address: "Surabaya",
-  },
-  {
-    id: 7,
-    fullName: "Naufal Irsyad",
-    phone: "+62-8244-1432-609",
-    email: "naufdyad222@example.com",
-    address: "Tangerang",
-  }
-);
+function renderSeperatorLine() {
+  console.log("-------------------------");
+}
 
 function showContacts(contactList) {
   for (let data of contactList) {
     console.log(
-      `${data.fullName} | ${data.phone} | ${data.email} | ${data.address}`
+      `${data.id} ${data.fullName} | ${data.phone} | ${data.email} | ${data.address}`
     );
   }
-
-  let totalContacts = contactList.length;
-  console.log("Total contacts are: ", totalContacts);
 }
 
-showContacts(contacts);
+function addContact(
+  contacts,
+  fullName = "Hendra",
+  phone = null,
+  email = null,
+  address = null
+) {
+  const newId = contacts[contacts.length - 1].id + 1;
+
+  const newContact = {
+    id: newId,
+    fullName: fullName,
+    phone: phone,
+    email: email,
+    address: address,
+  };
+
+  const updatedContacts = [...contacts, newContact];
+
+  dataContacts = updatedContacts;
+}
+
+addContact(
+  dataContacts,
+  "Dimas Aditya",
+  "+62-888-3333-222",
+  "dimasaditya@example.com",
+  "Bandung"
+);
+
+function findContactId(id) {
+  return dataContacts.find((contact) => contact.id === id);
+}
+
+try {
+  const contact = findContactId(10);
+  if (!contact) throw new Error("Contact not found");
+  console.log("Contact found", contact);
+} catch (error) {
+  console.error("An error occurred:", error.message);
+}
+
+function deleteContact(contacts, id) {
+  const updatedContacts = contacts.filter((contact) => contact.id !== id);
+
+  dataContacts = updatedContacts;
+}
+deleteContact(dataContacts, 2);
+
+function searchContacts(contacts, keyword) {
+  const foundContacts = contacts.filter((contact) =>
+    contact.fullName.toLowerCase().includes(keyword.toLowerCase())
+  );
+  return foundContacts;
+}
+const searchResult = searchContacts(dataContacts, "bud");
+showContacts(searchResult);
+
+function editContact(contacts, id, newContactData) {
+  const updatedContacts = contacts.map((contact) => {
+    if (contact.id === id) {
+      return { ...contact, ...newContactData };
+    }
+    return contact;
+  });
+  dataContacts = updatedContacts;
+}
+editContact(dataContacts, 3, {
+  fullName: "Siti Rahmawati",
+  phone: "+62-3444-3444-099",
+});
+
+localStorage.setItem("contacts", JSON.stringify(dataContacts));
+
+showContacts(dataContacts);
