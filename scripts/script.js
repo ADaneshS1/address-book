@@ -48,13 +48,7 @@ function showContacts(contactList) {
   }
 }
 
-function addContact(
-  contacts,
-  fullName = "Hendra",
-  phone = null,
-  email = null,
-  address = null
-) {
+function addContact(contacts, fullName, phone, email, address) {
   const newId = contacts[contacts.length - 1].id + 1;
 
   const newContact = {
