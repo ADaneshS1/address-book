@@ -100,10 +100,10 @@ function searchContacts(contacts, keyword) {
 const searchResult = searchContacts(dataContacts, "bud");
 showContacts(searchResult);
 
-function editContact(contacts, id, newContactData) {
+function editContact(contacts, id, updatedContact) {
   const updatedContacts = contacts.map((contact) => {
     if (contact.id === id) {
-      return { ...contact, ...newContactData };
+      return { ...contact, ...updatedContact };
     }
     return contact;
   });
