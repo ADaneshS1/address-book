@@ -40,23 +40,24 @@ function renderSeperatorLine() {
   console.log("-------------------------");
 }
 
-function showContacts(contactList) {
-  for (let data of contactList) {
+function showContacts(contacts) {
+  for (let contact of contacts) {
     console.log(
-      `${data.id} ${data.fullName} | ${data.phone} | ${data.email} | ${data.address}`
+      `${contact.id} ${contact.fullName} | ${contact.phone} | ${contact.email} | ${contact.address}`
     );
   }
 }
 
+// TODO: Change parameter fields into object
 function addContact(contacts, fullName, phone, email, address) {
   const newId = contacts[contacts.length - 1].id + 1;
 
   const newContact = {
     id: newId,
-    fullName: fullName,
-    phone: phone,
-    email: email,
-    address: address,
+    fullName,
+    phone,
+    email,
+    address,
   };
 
   const updatedContacts = [...contacts, newContact];
@@ -64,24 +65,8 @@ function addContact(contacts, fullName, phone, email, address) {
   dataContacts = updatedContacts;
 }
 
-addContact(
-  dataContacts,
-  "Dimas Aditya",
-  "+62-888-3333-222",
-  "dimasaditya@example.com",
-  "Bandung"
-);
-
 function findContactId(id) {
   return dataContacts.find((contact) => contact.id === id);
-}
-
-try {
-  const contact = findContactId(10);
-  if (!contact) throw new Error("Contact not found");
-  console.log("Contact found", contact);
-} catch (error) {
-  console.error("An error occurred:", error.message);
 }
 
 function deleteContact(contacts, id) {
@@ -89,7 +74,6 @@ function deleteContact(contacts, id) {
 
   dataContacts = updatedContacts;
 }
-deleteContact(dataContacts, 2);
 
 function searchContacts(contacts, keyword) {
   const foundContacts = contacts.filter((contact) =>
@@ -97,23 +81,51 @@ function searchContacts(contacts, keyword) {
   );
   return foundContacts;
 }
-const searchResult = searchContacts(dataContacts, "bud");
-showContacts(searchResult);
 
-function editContact(contacts, id, updatedContact) {
+// TODO: Destructure newContactData
+function editContact(contacts, id, newContactData) {
   const updatedContacts = contacts.map((contact) => {
     if (contact.id === id) {
-      return { ...contact, ...updatedContact };
+      return {
+        ...contact,
+        ...newContactData, // fullName, phone, email
+      };
     }
     return contact;
   });
   dataContacts = updatedContacts;
 }
-editContact(dataContacts, 3, {
-  fullName: "Siti Rahmawati",
-  phone: "+62-3444-3444-099",
-});
 
-localStorage.setItem("contacts", JSON.stringify(dataContacts));
+// -----------------------------------------
+
+// try {
+//   const contact = findContactId(10);
+//   if (!contact) throw new Error("Contact not found");
+//   console.log("Contact found", contact);
+// } catch (error) {
+//   console.error("An error occurred:", error.message);
+// }
+
+// addContact(
+//   dataContacts,
+//   "Dimas Aditya",
+//   "+62-888-3333-222",
+//   "dimasaditya@example.com",
+//   "Bandung"
+// );
+
+// localStorage.setItem("contacts", JSON.stringify(dataContacts));
+
+// showContacts(dataContacts);
+
+deleteContact(dataContacts, 2);
 
 showContacts(dataContacts);
+
+const searchResults = searchContacts(dataContacts, "bud");
+showContacts(searchResults);
+
+// editContact(dataContacts, 3, {
+//   fullName: "Siti Rahmawati",
+//   phone: "+62-3444-3444-099",
+// });
