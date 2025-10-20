@@ -38,13 +38,13 @@ let dataContacts = [
 
 function renderContacts(contacts) {
   const appElement = document.getElementById("contacts");
-  appElement.innerHTML = `<ul>
+  appElement.innerHTML = `<ul class="space-y-4">
     ${contacts.map((contact) => renderContact(contact)).join("")}
   </ul>`;
 }
 
 function renderContact(contact) {
-  return `<li>
+  return `<li class="p-2 border border-solid-black">
     <h2>${contact.fullName}</h2>
     <p>${contact.phone}</p>
     <p>${contact.email}</p>

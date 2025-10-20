@@ -4,30 +4,56 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Address Book</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
-  <body>
+  <body class="p-2 space-y-8">
     <h1>Address Book</h1>
 
-    <form>
-      <div>
-        <label for="fullname">Fullname</label>
-        <input type="text" name="fullname" id="fullname" />
+    <form class="p-4 space-y-3">
+      <div class="flex flex-col">
+        <label for="fullname" class="text-sm font-medium mb-1">Fullname</label>
+        <input
+          type="text"
+          id="fullname"
+          name="fullname"
+          class="border rounded px-3 py-2"
+        />
       </div>
-      <div>
-        <label for="phone">Phone</label>
-        <input type="tel" name="phone" id="phone" />
+
+      <div class="flex flex-col">
+        <label for="phone" class="text-sm font-medium mb-1">Phone</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          class="border rounded px-3 py-2"
+        />
       </div>
-      <div>
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" />
+
+      <div class="flex flex-col">
+        <label for="email" class="text-sm font-medium mb-1">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="border rounded px-3 py-2"
+        />
       </div>
-      <div>
-        <label for="address">Address</label>
-        <input type="text" name="address" id="address" />
+
+      <div class="flex flex-col">
+        <label for="address" class="text-sm font-medium mb-1">Address</label>
+        <input
+          type="text"
+          id="address"
+          name="address"
+          class="border rounded px-3 py-2"
+        />
       </div>
+
+      <button type="submit" class="py-2 px-4 rounded">Submit</button>
     </form>
 
-    <div id="contacts"></div>
+    <div id="contacts" class="max-w-xl"></div>
 
     <script type="module" src="/scripts/script.js"></script>
   </body>
