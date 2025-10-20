@@ -36,17 +36,21 @@ let dataContacts = [
   },
 ];
 
-function renderSeperatorLine() {
-  console.log("-------------------------");
+function showContacts(contacts) {
+  const appElement = document.getElementById("contacts");
+  appElement.innerHTML = contacts
+    .map(
+      (contact) => `<li>
+      <h3>${contact.fullName}</h3>
+      <p>${contact.phone}</p>
+      <p>${contact.email}</p>
+      <p>${contact.address}</p>
+    </li>`
+    )
+    .join("");
 }
 
-function showContacts(contactList) {
-  for (let data of contactList) {
-    console.log(
-      `${data.id} ${data.fullName} | ${data.phone} | ${data.email} | ${data.address}`
-    );
-  }
-}
+showContacts(dataContacts);
 
 function addContact(contacts, fullName, phone, email, address) {
   const newId = contacts[contacts.length - 1].id + 1;
@@ -76,13 +80,13 @@ function findContactId(id) {
   return dataContacts.find((contact) => contact.id === id);
 }
 
-try {
-  const contact = findContactId(10);
-  if (!contact) throw new Error("Contact not found");
-  console.log("Contact found", contact);
-} catch (error) {
-  console.error("An error occurred:", error.message);
-}
+// try {
+//   const contact = findContactId(10);
+//   if (!contact) throw new Error("Contact not found");
+//   console.log("Contact found", contact);
+// } catch (error) {
+//   console.error("An error occurred:", error.message);
+// }
 
 function deleteContact(contacts, id) {
   const updatedContacts = contacts.filter((contact) => contact.id !== id);
@@ -98,7 +102,7 @@ function searchContacts(contacts, keyword) {
   return foundContacts;
 }
 const searchResult = searchContacts(dataContacts, "bud");
-showContacts(searchResult);
+// showContacts(searchResult);
 
 function editContact(contacts, id, updatedContact) {
   const updatedContacts = contacts.map((contact) => {
@@ -115,5 +119,3 @@ editContact(dataContacts, 3, {
 });
 
 localStorage.setItem("contacts", JSON.stringify(dataContacts));
-
-showContacts(dataContacts);
