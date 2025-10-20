@@ -52,8 +52,6 @@ function renderContact(contact) {
   </li>`;
 }
 
-renderContacts(dataContacts);
-
 function addContact(contacts, fullName, phone, email, address) {
   const newId = contacts[contacts.length - 1].id + 1;
 
@@ -70,32 +68,15 @@ function addContact(contacts, fullName, phone, email, address) {
   dataContacts = updatedContacts;
 }
 
-addContact(
-  dataContacts,
-  "Dimas Aditya",
-  "+62-888-3333-222",
-  "dimasaditya@example.com",
-  "Bandung"
-);
-
-function findContactId(id) {
+function getContactById(id) {
   return dataContacts.find((contact) => contact.id === id);
 }
 
-// try {
-//   const contact = findContactId(10);
-//   if (!contact) throw new Error("Contact not found");
-//   console.log("Contact found", contact);
-// } catch (error) {
-//   console.error("An error occurred:", error.message);
-// }
-
-function deleteContact(contacts, id) {
+function deleteContactById(contacts, id) {
   const updatedContacts = contacts.filter((contact) => contact.id !== id);
 
   dataContacts = updatedContacts;
 }
-deleteContact(dataContacts, 2);
 
 function searchContacts(contacts, keyword) {
   const foundContacts = contacts.filter((contact) =>
@@ -103,10 +84,8 @@ function searchContacts(contacts, keyword) {
   );
   return foundContacts;
 }
-const searchResult = searchContacts(dataContacts, "bud");
-// showContacts(searchResult);
 
-function editContact(contacts, id, updatedContact) {
+function editContactById(contacts, id, updatedContact) {
   const updatedContacts = contacts.map((contact) => {
     if (contact.id === id) {
       return { ...contact, ...updatedContact };
@@ -115,9 +94,25 @@ function editContact(contacts, id, updatedContact) {
   });
   dataContacts = updatedContacts;
 }
-editContact(dataContacts, 3, {
-  fullName: "Siti Rahmawati",
-  phone: "+62-3444-3444-099",
-});
 
-localStorage.setItem("contacts", JSON.stringify(dataContacts));
+// --------------------------------------------------------------
+
+renderContacts(dataContacts);
+
+// addContact(
+//   dataContacts,
+//   "Dimas Aditya",
+//   "+62-888-3333-222",
+//   "dimasaditya@example.com",
+//   "Bandung"
+// );
+
+// deleteContact(dataContacts, 2);
+
+// const searchResult = searchContacts(dataContacts, "bud");
+// showContacts(searchResult);
+
+// editContact(dataContacts, 3, {
+//   fullName: "Siti Rahmawati",
+//   phone: "+62-3444-3444-099",
+// });
