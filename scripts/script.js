@@ -36,21 +36,23 @@ let dataContacts = [
   },
 ];
 
-function showContacts(contacts) {
+function renderContacts(contacts) {
   const appElement = document.getElementById("contacts");
-  appElement.innerHTML = contacts
-    .map(
-      (contact) => `<li>
-      <h3>${contact.fullName}</h3>
-      <p>${contact.phone}</p>
-      <p>${contact.email}</p>
-      <p>${contact.address}</p>
-    </li>`
-    )
-    .join("");
+  appElement.innerHTML = `<ul>
+    ${contacts.map((contact) => renderContact(contact)).join("")}
+  </ul>`;
 }
 
-showContacts(dataContacts);
+function renderContact(contact) {
+  return `<li>
+    <h2>${contact.fullName}</h2>
+    <p>${contact.phone}</p>
+    <p>${contact.email}</p>
+    <p>${contact.address}</p>
+  </li>`;
+}
+
+renderContacts(dataContacts);
 
 function addContact(contacts, fullName, phone, email, address) {
   const newId = contacts[contacts.length - 1].id + 1;
