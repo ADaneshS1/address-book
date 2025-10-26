@@ -38,34 +38,59 @@ let dataContacts = [
 
 function renderContacts(contacts) {
   const appElement = document.getElementById("contacts");
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const query = searchParams.get("q");
+
+  const queryElement = document.getElementById("q");
+  if (queryElement) queryElement.value = query || "";
+
+  const filteredContacts = query ? searchContacts(contacts, query) : contacts;
+
   appElement.innerHTML = `<ul class="space-y-4">
-    ${contacts.map((contact) => renderContact(contact)).join("")}
+    ${filteredContacts.map((contact) => renderContact(contact)).join("")}
   </ul>`;
+
+  const deleteButtons = document.querySelectorAll(".delete-btn");
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      const id = Number(e.target.dataset.id);
+      deleteContactById(id);
+    });
+  });
 }
 
 function renderContact(contact) {
-  return `<li class="p-2 border border-solid-black">
-    <h2>${contact.fullName}</h2>
-    <p>${contact.phone}</p>
-    <p>${contact.email}</p>
-    <p>${contact.address}</p>
-  </li>`;
+  return `
+    <li class="p-4 border rounded-lg shadow-sm bg-white">
+      <div class="flex justify-between items-start">
+        <div>
+          <h2 class="font-semibold text-lg">${contact.fullName}</h2>
+          <p class="text-gray-600">${contact.id}</p>
+          <p class="text-gray-600">${contact.phone}</p>
+          <p class="text-gray-600">${contact.email}</p>
+          <p class="text-gray-600">${contact.address}</p>
+        </div>
+        <button 
+          class="delete-btn bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded" 
+          data-id="${contact.id}">
+          Delete
+        </button>
+      </div>
+    </li>
+  `;
 }
 
-function addContact(contacts, { fullName = null, email = null, phone = null }) {
+function searchContacts(contacts, keyword) {
+  return contacts.filter((contact) =>
+    contact.fullName.toLowerCase().includes(keyword.toLowerCase())
+  );
+}
+
+function addContact(contacts, contact) {
   const newId = contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 1;
-
-  const newContact = {
-    id: newId,
-    fullName,
-    phone,
-    email,
-  };
-
-  const updatedContacts = [...contacts, newContact];
-
+  const updatedContacts = [...contacts, { id: newId, ...contact }];
   dataContacts = updatedContacts;
-
   renderContacts(updatedContacts);
 }
 
@@ -73,61 +98,36 @@ function getContactById(id) {
   return dataContacts.find((contact) => contact.id === id);
 }
 
-function deleteContactById(contacts, id) {
-  const updatedContacts = contacts.filter((contact) => contact.id !== id);
-
-  dataContacts = updatedContacts;
+function deleteContactById(id) {
+  dataContacts = dataContacts.filter((contact) => contact.id !== id);
+  console.log(dataContacts);
+  renderContacts(dataContacts); // ✅ perbaikan di sini
 }
 
 function editContactById(contacts, id, updatedContact) {
-  const updatedContacts = contacts.map((contact) => {
-    if (contact.id === id) {
-      return { ...contact, ...updatedContact };
-    }
-    return contact;
-  });
+  const updatedContacts = contacts.map((contact) =>
+    contact.id === id ? { ...contact, ...updatedContact } : contact
+  );
   dataContacts = updatedContacts;
+  renderContacts(updatedContacts);
 }
 
 const addContactFormElement = document.getElementById("add-contact-form");
-console.log(addContactFormElement);
 
 addContactFormElement.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const formData = new FormData(addContactFormElement);
-  console.log(formData);
-
   const newContactData = {
-    fullName: formData.get("fullname").toString(),
-    phone: formData.get("phone").toString(),
-    address: formData.get("address").toString(),
-    email: formData.get("email").toString(),
+    fullName: formData.get("fullname"),
+    phone: formData.get("phone"),
+    address: formData.get("address"),
+    email: formData.get("email"),
   };
 
-  console.log(newContactData);
-
   addContact(dataContacts, newContactData);
+  addContactFormElement.reset();
 });
 
-// --------------------------------------------------------------
-
+// 🔹 Render awal
 renderContacts(dataContacts);
-
-// addContact(
-//   dataContacts,
-//   "Dimas Aditya",
-//   "+62-888-3333-222",
-//   "dimasaditya@example.com",
-//   "Bandung"
-// );
-
-// deleteContact(dataContacts, 2);
-
-// const searchResult = searchContacts(dataContacts, "bud");
-// showContacts(searchResult);
-
-// editContact(dataContacts, 3, {
-//   fullName: "Siti Rahmawati",
-//   phone: "+62-3444-3444-099",
-// });
