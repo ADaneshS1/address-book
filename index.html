@@ -6,54 +6,85 @@
     <title>Address Book</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
-  <body class="p-2 space-y-8">
-    <h1>Address Book</h1>
 
-    <form class="p-4 space-y-3">
-      <div class="flex flex-col">
-        <label for="fullname" class="text-sm font-medium mb-1">Fullname</label>
-        <input
-          type="text"
-          id="fullname"
-          name="fullname"
-          class="border rounded px-3 py-2"
-        />
-      </div>
+  <body class="min-h-screen bg-gray-50 p-6">
+    <div class="max-w-xl mx-auto space-y-8">
+      <h1 class="text-2xl font-bold text-gray-800 text-center">
+        📒 Address Book
+      </h1>
 
-      <div class="flex flex-col">
-        <label for="phone" class="text-sm font-medium mb-1">Phone</label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          class="border rounded px-3 py-2"
-        />
-      </div>
+      <!-- Form Tambah Kontak -->
+      <form
+        id="add-contact-form"
+        method="post"
+        class="bg-white p-5 rounded-2xl shadow space-y-4"
+      >
+        <div>
+          <label for="fullname" class="block text-sm font-medium text-gray-700"
+            >Fullname</label
+          >
+          <input
+            type="text"
+            id="fullname"
+            name="fullname"
+            class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            placeholder="Masukkan nama lengkap"
+          />
+        </div>
 
-      <div class="flex flex-col">
-        <label for="email" class="text-sm font-medium mb-1">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          class="border rounded px-3 py-2"
-        />
-      </div>
+        <div>
+          <label for="phone" class="block text-sm font-medium text-gray-700"
+            >Phone</label
+          >
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            placeholder="+62-812-xxxx-xxxx"
+          />
+        </div>
 
-      <div class="flex flex-col">
-        <label for="address" class="text-sm font-medium mb-1">Address</label>
-        <input
-          type="text"
-          id="address"
-          name="address"
-          class="border rounded px-3 py-2"
-        />
-      </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700"
+            >Email</label
+          >
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            placeholder="contoh@email.com"
+          />
+        </div>
 
-      <button type="submit" class="py-2 px-4 rounded">Submit</button>
-    </form>
+        <div>
+          <label for="address" class="block text-sm font-medium text-gray-700"
+            >Address</label
+          >
+          <input
+            type="text"
+            id="address"
+            name="address"
+            class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            placeholder="Masukkan alamat"
+          />
+        </div>
 
-    <div id="contacts" class="max-w-xl"></div>
+        <button
+          type="submit"
+          class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition"
+        >
+          Add Contact
+        </button>
+      </form>
+
+      <!-- Daftar Kontak -->
+      <div
+        id="contacts"
+        class="bg-white p-4 rounded-2xl shadow space-y-4"
+      ></div>
+    </div>
 
     <script type="module" src="/scripts/script.js"></script>
   </body>

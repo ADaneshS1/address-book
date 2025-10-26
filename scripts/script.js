@@ -52,20 +52,21 @@ function renderContact(contact) {
   </li>`;
 }
 
-function addContact(contacts, fullName, phone, email, address) {
-  const newId = contacts[contacts.length - 1].id + 1;
+function addContact(contacts, { fullName = null, email = null, phone = null }) {
+  const newId = contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 1;
 
   const newContact = {
     id: newId,
-    fullName: fullName,
-    phone: phone,
-    email: email,
-    address: address,
+    fullName,
+    phone,
+    email,
   };
 
   const updatedContacts = [...contacts, newContact];
 
   dataContacts = updatedContacts;
+
+  renderContacts(updatedContacts);
 }
 
 function getContactById(id) {
@@ -78,13 +79,6 @@ function deleteContactById(contacts, id) {
   dataContacts = updatedContacts;
 }
 
-function searchContacts(contacts, keyword) {
-  const foundContacts = contacts.filter((contact) =>
-    contact.fullName.toLowerCase().includes(keyword.toLowerCase())
-  );
-  return foundContacts;
-}
-
 function editContactById(contacts, id, updatedContact) {
   const updatedContacts = contacts.map((contact) => {
     if (contact.id === id) {
@@ -94,6 +88,27 @@ function editContactById(contacts, id, updatedContact) {
   });
   dataContacts = updatedContacts;
 }
+
+const addContactFormElement = document.getElementById("add-contact-form");
+console.log(addContactFormElement);
+
+addContactFormElement.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(addContactFormElement);
+  console.log(formData);
+
+  const newContactData = {
+    fullName: formData.get("fullname").toString(),
+    phone: formData.get("phone").toString(),
+    address: formData.get("address").toString(),
+    email: formData.get("email").toString(),
+  };
+
+  console.log(newContactData);
+
+  addContact(dataContacts, newContactData);
+});
 
 // --------------------------------------------------------------
 
