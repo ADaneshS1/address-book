@@ -1,4 +1,4 @@
-let dataContacts = [
+let dataContacts = JSON.parse(localStorage.getItem("contacts")) || [
   {
     id: 1,
     fullName: "Budi Setiawan",
@@ -36,6 +36,10 @@ let dataContacts = [
   },
 ];
 
+function saveToLocalStorage() {
+  localStorage.setItem("contacts", JSON.stringify(dataContacts));
+}
+
 function renderContacts(contacts) {
   const appElement = document.getElementById("contacts");
 
@@ -43,13 +47,15 @@ function renderContacts(contacts) {
   const query = searchParams.get("q");
 
   const queryElement = document.getElementById("q");
-  if (queryElement) queryElement.value = query || "";
+  queryElement.value = query || "";
 
   const filteredContacts = query ? searchContacts(contacts, query) : contacts;
 
-  appElement.innerHTML = `<ul class="space-y-4">
-    ${filteredContacts.map((contact) => renderContact(contact)).join("")}
-  </ul>`;
+  appElement.innerHTML = `
+    <ul class="space-y-4">
+      ${filteredContacts.map((contact) => renderContact(contact)).join("")}
+    </ul>
+  `;
 
   const deleteButtons = document.querySelectorAll(".delete-btn");
   deleteButtons.forEach((button) => {
@@ -66,7 +72,6 @@ function renderContact(contact) {
       <div class="flex justify-between items-start">
         <div>
           <h2 class="font-semibold text-lg">${contact.fullName}</h2>
-          <p class="text-gray-600">${contact.id}</p>
           <p class="text-gray-600">${contact.phone}</p>
           <p class="text-gray-600">${contact.email}</p>
           <p class="text-gray-600">${contact.address}</p>
@@ -91,25 +96,14 @@ function addContact(contacts, contact) {
   const newId = contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 1;
   const updatedContacts = [...contacts, { id: newId, ...contact }];
   dataContacts = updatedContacts;
+  saveToLocalStorage();
   renderContacts(updatedContacts);
-}
-
-function getContactById(id) {
-  return dataContacts.find((contact) => contact.id === id);
 }
 
 function deleteContactById(id) {
   dataContacts = dataContacts.filter((contact) => contact.id !== id);
-  console.log(dataContacts);
-  renderContacts(dataContacts); // ✅ perbaikan di sini
-}
-
-function editContactById(contacts, id, updatedContact) {
-  const updatedContacts = contacts.map((contact) =>
-    contact.id === id ? { ...contact, ...updatedContact } : contact
-  );
-  dataContacts = updatedContacts;
-  renderContacts(updatedContacts);
+  saveToLocalStorage();
+  renderContacts(dataContacts);
 }
 
 const addContactFormElement = document.getElementById("add-contact-form");
@@ -119,15 +113,15 @@ addContactFormElement.addEventListener("submit", (event) => {
 
   const formData = new FormData(addContactFormElement);
   const newContactData = {
-    fullName: formData.get("fullname"),
-    phone: formData.get("phone"),
-    address: formData.get("address"),
-    email: formData.get("email"),
+    fullName: formData.get("fullname").toString(),
+    phone: formData.get("phone").toString(),
+    address: formData.get("address").toString(),
+    email: formData.get("email").toString(),
   };
 
   addContact(dataContacts, newContactData);
+
   addContactFormElement.reset();
 });
 
-// 🔹 Render awal
 renderContacts(dataContacts);
