@@ -106,6 +106,18 @@ function deleteContactById(id) {
   renderContacts(dataContacts);
 }
 
+document.getElementById("sort-asc").addEventListener("click", () => {
+  dataContacts.sort((a, b) => a.id - b.id);
+  saveToLocalStorage();
+  renderContacts(dataContacts);
+});
+
+document.getElementById("sort-desc").addEventListener("click", () => {
+  dataContacts.sort((a, b) => b.id - a.id);
+  saveToLocalStorage();
+  renderContacts(dataContacts);
+});
+
 const addContactFormElement = document.getElementById("add-contact-form");
 
 addContactFormElement.addEventListener("submit", (event) => {
