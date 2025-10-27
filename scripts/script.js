@@ -36,12 +36,18 @@ let dataContacts = JSON.parse(localStorage.getItem("contacts")) || [
   },
 ];
 
+function loadFromLocalStorage() {
+  // TODO: Implement
+}
+
 function saveToLocalStorage() {
   localStorage.setItem("contacts", JSON.stringify(dataContacts));
 }
 
 function renderContacts(contacts) {
   const appElement = document.getElementById("contacts");
+
+  // TODO: sortParams
 
   const searchParams = new URLSearchParams(window.location.search);
   const query = searchParams.get("q");
@@ -105,18 +111,6 @@ function deleteContactById(id) {
   saveToLocalStorage();
   renderContacts(dataContacts);
 }
-
-document.getElementById("sort-asc").addEventListener("click", () => {
-  dataContacts.sort((a, b) => a.id - b.id);
-  saveToLocalStorage();
-  renderContacts(dataContacts);
-});
-
-document.getElementById("sort-desc").addEventListener("click", () => {
-  dataContacts.sort((a, b) => b.id - a.id);
-  saveToLocalStorage();
-  renderContacts(dataContacts);
-});
 
 const addContactFormElement = document.getElementById("add-contact-form");
 

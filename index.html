@@ -27,18 +27,20 @@
       </form>
 
       <div class="flex justify-end gap-2">
-        <button
-          id="sort-asc"
+        <a
+          href="/?sort=asc-alphabet"
+          id="sort-asc-alphabet"
           class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded"
         >
-          Sort ID ↑
-        </button>
-        <button
-          id="sort-desc"
+          Sort A-Z ↑
+        </a>
+        <a
+          href="/?sort=desc-alphabet"
+          id="sort-desc-alphabet"
           class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded"
         >
-          Sort ID ↓
-        </button>
+          Sort Z-A ↓
+        </a>
       </div>
 
       <form
@@ -55,7 +57,7 @@
             id="fullname"
             name="fullname"
             class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Masukkan nama lengkap"
+            placeholder="Enter full name"
           />
         </div>
 
@@ -68,7 +70,7 @@
             id="phone"
             name="phone"
             class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="+62-812-xxxx-xxxx"
+            placeholder="+1-000-000-000"
           />
         </div>
 
@@ -81,7 +83,7 @@
             id="email"
             name="email"
             class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="contoh@email.com"
+            placeholder="example@email.com"
           />
         </div>
 
@@ -94,7 +96,7 @@
             id="address"
             name="address"
             class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Masukkan alamat"
+            placeholder="Enter address"
           />
         </div>
 
@@ -106,7 +108,7 @@
         </button>
       </form>
 
-      <!-- Daftar Kontak -->
+      <!-- Contacts List -->
       <div
         id="contacts"
         class="bg-white p-4 rounded-2xl shadow space-y-4"
