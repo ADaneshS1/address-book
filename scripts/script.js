@@ -39,6 +39,8 @@ let dataContacts = JSON.parse(localStorage.getItem("contacts")) || [
 // ✅ Sort default A–Z saat pertama kali load
 dataContacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
 
+function loadFromLocalStorage() {}
+
 function saveToLocalStorage() {
   localStorage.setItem("contacts", JSON.stringify(dataContacts));
 }
