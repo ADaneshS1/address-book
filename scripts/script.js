@@ -36,6 +36,7 @@ let dataContacts = JSON.parse(localStorage.getItem("contacts")) || [
   },
 ];
 
+// ✅ Sort default A–Z saat pertama kali load
 dataContacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
 
 function saveToLocalStorage() {
@@ -59,21 +60,21 @@ function renderContacts(contacts) {
     </ul>
   `;
 
-  const deleteButtons = document.querySelectorAll(".delete-btn");
-  deleteButtons.forEach((button) => {
+  // Delete
+  document.querySelectorAll(".delete-btn").forEach((button) => {
     button.addEventListener("click", (event) => {
       const id = Number(event.target.dataset.id);
       deleteContactById(id);
     });
   });
 
-  // const editButtons = document.querySelectorAll(".edit-btn");
-  // editButtons.forEach((button) => {
-  //   button.addEventListener("click", (event) => {
-  //     const id = Number(event.target.dataset.id);
-  //     loadContactToForm(id);
-  //   });
-  // });
+  // Edit
+  document.querySelectorAll(".edit-btn").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const id = Number(event.target.dataset.id);
+      loadContactToForm(id);
+    });
+  });
 }
 
 function renderContact(contact) {
@@ -86,16 +87,18 @@ function renderContact(contact) {
           <p class="text-gray-600">${contact.email}</p>
           <p class="text-gray-600">${contact.address}</p>
         </div>
-        // <button 
-        //   class="edit-btn bg-yellow-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded" 
-        //   data-id="${contact.id}">
-        //   Edit
-        // </button>
-        <button 
-          class="delete-btn bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded" 
-          data-id="${contact.id}">
-          Delete
-        </button>
+        <div class="flex gap-2">
+          <button 
+            class="edit-btn bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded" 
+            data-id="${contact.id}">
+            Edit
+          </button>
+          <button 
+            class="delete-btn bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded" 
+            data-id="${contact.id}">
+            Delete
+          </button>
+        </div>
       </div>
     </li>
   `;
@@ -110,9 +113,11 @@ function searchContacts(contacts, keyword) {
 function addContact(contacts, contact) {
   const newId = contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 1;
   const updatedContacts = [...contacts, { id: newId, ...contact }];
-  dataContacts = updatedContacts;
+  dataContacts = updatedContacts.sort((a, b) =>
+    a.fullName.localeCompare(b.fullName)
+  );
   saveToLocalStorage();
-  renderContacts(updatedContacts);
+  renderContacts(dataContacts);
 }
 
 function deleteContactById(id) {
@@ -121,17 +126,31 @@ function deleteContactById(id) {
   renderContacts(dataContacts);
 }
 
-document.getElementById("sort-asc").addEventListener("click", () => {
-  dataContacts.sort((a, b) => a.id - b.id);
-  saveToLocalStorage();
-  renderContacts(dataContacts);
-});
+// 🟡 Fitur edit
+function loadContactToForm(id) {
+  const contact = dataContacts.find((c) => c.id === id);
+  if (!contact) return;
 
-document.getElementById("sort-desc").addEventListener("click", () => {
-  dataContacts.sort((a, b) => b.id - a.id);
-  saveToLocalStorage();
-  renderContacts(dataContacts);
-});
+  document.getElementById("fullname").value = contact.fullName;
+  document.getElementById("phone").value = contact.phone;
+  document.getElementById("email").value = contact.email;
+  document.getElementById("address").value = contact.address;
+
+  addContactFormElement.dataset.editingId = id;
+  document.querySelector(
+    "#add-contact-form button[type='submit']"
+  ).textContent = "Update Contact";
+}
+
+function updateContact(id, updatedData) {
+  const index = dataContacts.findIndex((c) => c.id === id);
+  if (index !== -1) {
+    dataContacts[index] = { id, ...updatedData };
+    dataContacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
+    saveToLocalStorage();
+    renderContacts(dataContacts);
+  }
+}
 
 const addContactFormElement = document.getElementById("add-contact-form");
 
@@ -146,7 +165,19 @@ addContactFormElement.addEventListener("submit", (event) => {
     email: formData.get("email").toString(),
   };
 
-  addContact(dataContacts, newContactData);
+  const editingId = addContactFormElement.dataset.editingId;
+
+  if (editingId) {
+    // Mode edit
+    updateContact(Number(editingId), newContactData);
+    delete addContactFormElement.dataset.editingId;
+    document.querySelector(
+      "#add-contact-form button[type='submit']"
+    ).textContent = "Add Contact";
+  } else {
+    // Mode tambah baru
+    addContact(dataContacts, newContactData);
+  }
 
   addContactFormElement.reset();
 });
